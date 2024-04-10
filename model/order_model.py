@@ -21,6 +21,12 @@ class OrderModel:
                                                 quantity=quantity)
         self.__stock_trading_invoker.set_command(place_order_command)
         order = self.__stock_trading_invoker.execute()
+
+        if order is not None:
+            sql_query = "INSERT INTO [dbo].[orders] (id,symbol,class,quantity,filled_quantity,order_type,order_side,status,created_at,submitted_at,filled_at,system_status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)"
+            self.__db_client.cursor.execute(sql_query,order.client_order_id,order.symbol,order.asset_class,order.qty,order.filled_qty,order.order_type,order.side,order.status,order.created_at,order.submitted_at,order.filled_at,'Submitted')
+            self.__db_client.cursor.commit()
+
         return order
 
     def get_all_orders(self):
@@ -35,4 +41,5 @@ class OrderModel:
                                                      alpaca_client=self.__alpaca_trading_client.trading_client)
         self.__stock_trading_invoker.set_command(cancel_all_orders_command)
         cancel_order_response = self.__stock_trading_invoker.execute()
+
         return cancel_order_response

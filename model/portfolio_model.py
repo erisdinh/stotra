@@ -25,4 +25,10 @@ class PortfolioModel:
                                                   alpaca_client=self.__alpaca_trading_client.trading_client)
         self.__portfolio_management_invoker.set_command(get_activity_command)
         portfolio_history = self.__portfolio_management_invoker.execute()
+
+        if portfolio_history is not None:
+            sql_query = "INSERT INTO [dbo].[portfolio_history] (base_value, profit_loss) VALUES (?,?)"
+            self.__db_client.cursor.execute(sql_query,portfolio_history.base_value, portfolio_history.profit_loss[-1])
+            self.__db_client.cursor.commit()
+
         return portfolio_history
