@@ -1,5 +1,6 @@
 """
 Connects to a SQL database using pyodbc
+DB Client is implemented using ObjectPool
 """
 import pyodbc
 

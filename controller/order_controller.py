@@ -1,4 +1,7 @@
-from alpaca.trading import OrderType, OrderSide
+"""
+Order Controller to coordinate interactions between Order View and Order Model
+"""
+from alpaca.trading import OrderSide
 from model.order_model import OrderModel
 
 

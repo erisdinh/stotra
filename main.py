@@ -6,7 +6,18 @@ from model.order_model import OrderModel
 from model.portfolio_model import PortfolioModel
 from view.order_view import OrderView
 from view.portfolio_view import PortfolioView
-from view.user_prompt import UserPromptView
+
+
+def display_greeting():
+    print("\n----------------------------------------------------------------------------------------")
+    print("Welcome to StoTra - Your personal stock trading and portfolio management application")
+    print("Please choose an option:")
+    print("1. Stock Trading")
+    print("2. Portfolio Management")
+    print("3. Exit")
+    input_value = int(input("Your selection: "))
+    return input_value
+
 
 if __name__ == "__main__":
     # Open Azure DB client pool
@@ -16,19 +27,19 @@ if __name__ == "__main__":
     alpaca_client_pool = AlpacaClientObjectPool()
 
     # Create instance of UserPromptView
-    user_prompt_view = UserPromptView()
-    input_value = user_prompt_view.display_greeting()
+    input_value = display_greeting()
 
     while input_value != 3:
         if int(input_value) == 1:
-            stock_trading_input_value = user_prompt_view.display_stock_trading_options()
+            # Create instance of OrderView and get user response
+            order_view = OrderView()
+            stock_trading_input_value = order_view.display_stock_trading_options()
 
             while stock_trading_input_value != 4:
                 db_client = db_pool.acquire()
                 alpaca_trading_client = alpaca_client_pool.acquire()
 
-                # Create instance of OrderView, OrderModel and OrderController
-                order_view = OrderView()
+                # Create instance of OrderModel and OrderController
                 order_model = OrderModel(db_client=db_client, alpaca_trading_client=alpaca_trading_client)
                 order_controller = OrderController(order_model, order_view)
 
@@ -40,32 +51,31 @@ if __name__ == "__main__":
                 elif int(stock_trading_input_value) == 3:
                     order_controller.get_all_orders()
 
-                stock_trading_input_value = user_prompt_view.display_stock_trading_options()
-
                 alpaca_client_pool.release(alpaca_trading_client)
                 db_pool.release(db_client)
+                stock_trading_input_value = order_view.display_stock_trading_options()
         elif int(input_value) == 2:
-            portfolio_management_input_value = user_prompt_view.display_portfolio_management_options()
+            # Create instance of PortfolioView and get user response
+            portfolio_view = PortfolioView()
+            portfolio_management_input_value = portfolio_view.display_portfolio_management_options()
 
             while portfolio_management_input_value != 3:
                 db_client = db_pool.acquire()
                 alpaca_trading_client = alpaca_client_pool.acquire()
 
-                # Create instance of PortfolioView, PortfolioModel and PortfolioController
-                portfolio_view = PortfolioView()
+                # Create instance of PortfolioModel and PortfolioController
                 portfolio_model = PortfolioModel(db_client=db_client, alpaca_trading_client=alpaca_trading_client)
                 portfolio_controller = PortfolioController(portfolio_model, portfolio_view)
 
                 if int(portfolio_management_input_value) == 1:
                     portfolio_controller.get_portfolio_history()
-                    portfolio_management_input_value = user_prompt_view.display_portfolio_management_options()
                 elif int(portfolio_management_input_value) == 2:
                     portfolio_controller.get_trade_activities()
-                    portfolio_management_input_value = user_prompt_view.display_portfolio_management_options()
 
                 alpaca_client_pool.release(alpaca_trading_client)
                 db_pool.release(db_client)
+                portfolio_management_input_value = portfolio_view.display_portfolio_management_options()
 
-        input_value = user_prompt_view.display_greeting()
+        input_value = display_greeting()
 
     input("See ya! Press any key to exit.")

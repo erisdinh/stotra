@@ -1,3 +1,6 @@
+"""
+Order Model for data and business logics related to stock trading (orders)
+"""
 from alpaca.trading import TradingClient
 from model.alpaca_commands import Invoker, Receiver, PlaceOrderCommand, GetAllOrdersCommand, CancelAllOrdersCommand
 from model.db_client import ReusableDBClient

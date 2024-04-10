@@ -1,5 +1,7 @@
+"""
+Portfolio Model for data and business logics related to portfolio management (portfolio gain/loss and trade activities)
+"""
 from alpaca.trading import TradingClient
-
 from model.alpaca_commands import Invoker, Receiver, GetTradeActivityCommand, GetPortfolioHistoryCommand
 from model.db_client import ReusableDBClient
 

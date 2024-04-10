@@ -1,4 +1,18 @@
+"""
+Portfolio View for displaying portfolio management output (gain/loss and trade activities)
+"""
+
+
 class PortfolioView:
+    def display_portfolio_management_options(self):
+        print("\n----------------------------------------------------------------------------------------")
+        print("Please choose an option:")
+        print("1. View portfolio gain/loss")
+        print("2. View trade activities")
+        print("3. Back")
+        input_value = int(input("Your selection: "))
+        return input_value
+
     def display_portfolio_history(self, portfolio_history):
         print(f"\n----------------------------------------------------------------------------------------\n"
               f"Portfolio: \n"
@@ -19,4 +33,3 @@ class PortfolioView:
                   f"Order Id: {activity["order_id"]}\n"
                   f"Cumulative Quantity: {activity["cum_qty"]}\n"
                   f"Order Status: {activity["order_status"]}")
-

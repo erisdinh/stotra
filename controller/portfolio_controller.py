@@ -1,3 +1,6 @@
+"""
+Portfolio Controller to coordinate interactions between Portfolio View and Portfolio Model
+"""
 from model.portfolio_model import PortfolioModel
 from view.portfolio_view import PortfolioView
 

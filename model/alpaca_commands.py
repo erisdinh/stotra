@@ -1,8 +1,11 @@
+"""
+Stock trading and portfolio management execution are implemented in command pattern
+"""
+
 import json
 from abc import ABC, abstractmethod
-
 from alpaca.trading import TradingClient, MarketOrderRequest, OrderSide, TimeInForce, GetPortfolioHistoryRequest, \
-    PortfolioHistory, Order, TradeActivity
+    PortfolioHistory, Order
 
 
 class Command(ABC):

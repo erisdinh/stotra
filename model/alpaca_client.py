@@ -1,5 +1,6 @@
 """
 Connects to Alpaca Trading API using TradingClient
+Alpaca Client is implemented using ObjectPool
 """
 from alpaca.trading.client import TradingClient
 
